@@ -8,17 +8,27 @@ const renderItem = obj => <Row {...obj.item} />
 const renderSectionHeader = obj => <Text>{obj.section.title}</Text>
 
 
-const ContactsList = props => (
+const ContactsList = props => {
+    const ContactsByLetter = props.contacts.reduce((obj, contact) => {
+        const firstLetter = contact.name[0].toUpperCase()
+        return {
 
-    <SectionList
-        renderItem={renderItem}
-        renderSectionHeader={renderSectionHeader}
-        sections={[{
-            title: 'A',
-            data: props.contacts
-        }]}
-    />
-)
+        }
+    })
+
+
+    return (
+
+        <SectionList
+            renderItem={renderItem}
+            renderSectionHeader={renderSectionHeader}
+            sections={[{
+                title: 'A',
+                data: props.contacts
+            }]}
+        />
+    )
+}
 
 ContactsList.propTypes = {
     renderItem: PropTypes.func,
