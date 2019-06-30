@@ -4,6 +4,7 @@ import { Button, SectionList, StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants'
 import contacts, { compareNames } from './contacts'
 import Row from './Row'
+import ContactsList from './ContactsList'
 
 const styles = StyleSheet.create({
   container: {
@@ -29,32 +30,21 @@ export default class App extends React.Component {
     }))
   }
 
-  renderItem = obj => <Row {...obj.item} />
+  // renderItem = obj => <Row {...obj.item} />
 
-  // Use key extractor to get rid of Key isn't string error
-  keyExtractor = (item, index) => index.toString()
-
-  renderSectionHeader = obj => <Text>{obj.section.title}</Text>
+  // renderSectionHeader = obj => <Text>{obj.section.title}</Text>
 
 
   render() {
 
     return (
       <View style={styles.container}>
-        <Button title="toggle contacts" onPress={this.toggleContacts} />
-        <Button title="sort" onPress={this.sort} />
-        {this.state.showContacts && (
 
-          <SectionList
-            renderItem={this.renderItem}
-            renderSectionHeader={this.renderSectionHeader}
-            sections={[{
-              title: 'A',
-              data: this.state.contacts
-            }]}
-          // keyExtractor={this.keyExtractor}
-          />
-        )}
+        <Button title="toggle contacts" onPress={this.toggleContacts} />
+
+        <Button title="sort" onPress={this.sort} />
+
+        {this.state.showContacts && <ContactsList contacts={this.state.contacts} />}
       </View>
     )
 
