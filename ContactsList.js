@@ -12,20 +12,21 @@ const ContactsList = props => {
     const ContactsByLetter = props.contacts.reduce((obj, contact) => {
         const firstLetter = contact.name[0].toUpperCase()
         return {
-
+            ...obj, [firstLetter]: [...(obj[firstLetter] || []), contact]
         }
-    })
+    }, {})
 
+    const sections = Object.keys(ContactsByLetter).sort().map(letter => ({
+        title: letter,
+        data: ContactsByLetter[letter]
+    }))
 
     return (
 
         <SectionList
             renderItem={renderItem}
             renderSectionHeader={renderSectionHeader}
-            sections={[{
-                title: 'A',
-                data: props.contacts
-            }]}
+            sections={sections}
         />
     )
 }
