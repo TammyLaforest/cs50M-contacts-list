@@ -28,14 +28,34 @@ export default class AddContactForm extends React.Component {
 
     state = {
         name: '',
-        phone: ''
+        phone: '',
+        isFormValid: false
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.name !== prevState.name || this.state.phone !== prevState.phone) {
+            this.validateForm()
+        }
+    }
+
     handleNameChange = name => {
         this.setState({ name })
     }
     handlePhoneChange = phone => {
-        this.setState({ phone })
+        if (+phone >= 0 && phone.length <= 10) {
+            this.setState({ phone })
+        }
     }
+
+    validateForm = () => {
+        if (+this.state.phone >= 0 && this.state.phone.length === 10
+            && this.state.name.length >= 2) {
+            this.setState({ isFormValid: true })
+        } else {
+            this.setState({ isFormValid: false })
+        }
+    }
+
     handleSubmit = () => {
         this.props.onSubmit(this.state)
         // this.props.onSubmit({ ...this.state })
@@ -58,7 +78,7 @@ export default class AddContactForm extends React.Component {
                     onChangeText={this.handlePhoneChange}
                     placeholder="Phone"
                 />
-                <Button title="Submit" onPress={this.handleSubmit} />
+                <Button title="Submit" onPress={this.handleSubmit} disabled={!this.state.isFormValid} />
             </View>
         )
     }
