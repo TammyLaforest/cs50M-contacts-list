@@ -1,16 +1,24 @@
 import React from 'react'
 import { Button, StyleSheet, TextInput, View } from 'react-native'
 import PropTypes from 'prop-types'
+import Constants from 'expo-constants'
 
 const styles = StyleSheet.create({
     input: {
-        padding: 5,
+        borderWidth: 1,
         borderColor: 'black',
-        borderWidth: 1
+        minWidth: 100,
+        marginTop: 20,
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 3,
     },
-    inputBox: {
-        paddingTop: 20
-    }
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingTop: Constants.statusBarHeight,
+    },
 })
 export default class AddContactForm extends React.Component {
 
@@ -28,20 +36,29 @@ export default class AddContactForm extends React.Component {
     handlePhoneChange = phone => {
         this.setState({ phone })
     }
+    handleSubmit = () => {
+        this.props.onSubmit(this.state)
+        // this.props.onSubmit({ ...this.state })
+        // this.props.onSubmit({ name: this.state.name, phone: this.state.phone })
+    }
 
     render() {
         return (
-            <View style={styles.inputBox}>
+            <View style={styles.container}>
                 <TextInput
                     style={styles.input}
+                    value={this.state.name}
                     onChangeText={this.handleNameChange}
-                    value={this.state.name} />
+                    placeholder="Name"
+                />
                 <TextInput
+                    keyboardType="numeric"
                     style={styles.input}
-                    onChangeText={this.handlePhoneChange}
                     value={this.state.phone}
-                    keyboardType="numeric" />
-                <Button title="Add Contact" />
+                    onChangeText={this.handlePhoneChange}
+                    placeholder="Phone"
+                />
+                <Button title="Submit" onPress={this.handleSubmit} />
             </View>
         )
     }
