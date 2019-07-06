@@ -46,6 +46,8 @@ export default class App extends React.Component {
   }
 
   render() {
+    // console.error('full page alert')
+
     if (this.state.showForm) return <AddContactForm onSubmit={this.addContact} />
     return (
       <View style={styles.container}>

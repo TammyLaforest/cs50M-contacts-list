@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, StyleSheet, TextInput, View } from 'react-native'
+import { Button, KeyboardAvoidingView, StyleSheet, TextInput, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Constants from 'expo-constants'
 
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         paddingTop: Constants.statusBarHeight,
+        justifyContent: 'center'
     },
 })
 export default class AddContactForm extends React.Component {
@@ -38,9 +39,17 @@ export default class AddContactForm extends React.Component {
         }
     }
 
+    // getHandler = key => val => {
+    //     this.setState({ [key]: val })
+    // }
+
+    // handleNameChange = this.getHandler('name')
+    // handlePhoneChange = this.getHandler('phone')
+
     handleNameChange = name => {
         this.setState({ name })
     }
+
     handlePhoneChange = phone => {
         if (+phone >= 0 && phone.length <= 10) {
             this.setState({ phone })
@@ -63,8 +72,9 @@ export default class AddContactForm extends React.Component {
     }
 
     render() {
+
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <TextInput
                     style={styles.input}
                     value={this.state.name}
@@ -79,7 +89,7 @@ export default class AddContactForm extends React.Component {
                     placeholder="Phone"
                 />
                 <Button title="Submit" onPress={this.handleSubmit} disabled={!this.state.isFormValid} />
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }
