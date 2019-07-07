@@ -52,7 +52,7 @@ const MainStack = createStackNavigator(
 MainStack.navigationOptions = {
   tabBarIcon: ({ focused, tintColor }) => (
     <Ionicons
-      name={`ios-contacts${focused ? "" : "-outline"}`}
+      name={`ios-contact`}
       size={25}
       color={tintColor}
     />
