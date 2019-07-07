@@ -7,7 +7,7 @@ export default class SettingsScreen extends React.Component {
   static navigationOptions = {
     tabBarIcon: ({ focused, tintColor }) => (
       <Ionicons
-        name={`md-settings`}
+        name={`ios-square${focused ? "" : '-outline'}`}
         size={25}
         color={tintColor}
       />
