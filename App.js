@@ -84,31 +84,39 @@ export default class App extends React.Component {
     contacts: null,
   }
   componentDidMount() {
-    fetch('https://randomuser.me/api?results=50&nat=us')
-      .then(response => response.json())
-      .then(({ results }) => {
-        console.log(results)
-        this.setState({ contacts: results })
 
-      })
+    //iife
+    (async function () {
+      const response = await fetch('https://randomuser.me/api?results=50&nat=us')
+      const { results } = await response.json()
+      console.log(results)
+      this.setState({ contacts: results })
+    })()
+
+
+    //     .then(response => response.json())
+    //     .then(({ results }) => {
+    //       console.log(results)
+    //       this.setState({ contacts: results })
+    //     })
+    // }
+    addContact = newContact => {
+      this.setState(prevState => ({
+        contacts: [...prevState.contacts, newContact]
+      }))
+    }
+
+    // Pass AppNavigator props to AppContainer instead
+    render() {
+      return (
+
+        <AppContainer
+          screenProps={{
+            contacts: this.state.contacts,
+            addContact: this.addContact
+          }}
+        />
+
+      )
+    }
   }
-  addContact = newContact => {
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact]
-    }))
-  }
-
-  // Pass AppNavigator props to AppContainer instead
-  render() {
-    return (
-
-      <AppContainer
-        screenProps={{
-          contacts: this.state.contacts,
-          addContact: this.addContact
-        }}
-      />
-
-    )
-  }
-}
