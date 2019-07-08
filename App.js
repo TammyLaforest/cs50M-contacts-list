@@ -82,13 +82,21 @@ const AppContainer = createAppContainer(AppNavigator)
 export default class App extends React.Component {
   state = {
     contacts: null,
-  };
+  }
+  componentDidMount() {
+    fetch('https://randomuser.me/api?results=50&nat=us')
+      .then(response => response.json())
+      .then(({ results }) => {
+        console.log(results)
+        this.setState({ contacts: results })
 
+      })
+  }
   addContact = newContact => {
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact]
-    }));
-  };
+    }))
+  }
 
   // Pass AppNavigator props to AppContainer instead
   render() {
@@ -101,6 +109,6 @@ export default class App extends React.Component {
         }}
       />
 
-    );
+    )
   }
 }
