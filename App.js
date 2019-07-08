@@ -19,13 +19,11 @@ import ContactDetailsScreen from "./screens/ContactDetailsScreen";
 import LoginScreen from "./screens/LoginScreen";
 
 // import contacts, { compareNames } from './contacts'
-import Row from './Row'
-import ContactsList from './ContactsList'
-import AddContactForm from './AddContactForm'
+// import Row from './Row'
+// import ContactsList from './ContactsList'
+// import AddContactForm from './AddContactForm'
 
 import { fetchUsers } from './api'
-
-
 
 const MainStack = createStackNavigator(
   {
