@@ -18,7 +18,7 @@ import ContactListScreen from "./screens/ContactListScreen";
 import ContactDetailsScreen from "./screens/ContactDetailsScreen";
 import LoginScreen from "./screens/LoginScreen";
 
-import contacts, { compareNames } from './contacts'
+// import contacts, { compareNames } from './contacts'
 import Row from './Row'
 import ContactsList from './ContactsList'
 import AddContactForm from './AddContactForm'
@@ -81,7 +81,7 @@ const AppContainer = createAppContainer(AppNavigator)
 
 export default class App extends React.Component {
   state = {
-    contacts
+    contacts: null,
   };
 
   addContact = newContact => {
@@ -104,54 +104,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-
-// Old Code Below
-
-
-// export default class App extends React.Component {
-//   state = {
-//     showContacts: true,
-//     showForm: false,
-//     contacts: contacts
-//   }
-//   addContact = newContact => {
-//     this.setState(prevState => ({ showForm: false, contacts: [...prevState.contacts, newContact] }))
-//   }
-//   toggleContacts = () => {
-//     this.setState(prevState => ({ showContacts: !prevState.showContacts }))
-//   }
-
-//   toggleForm = () => {
-//     this.setState(prevState => ({ showForm: !prevState.showForm }))
-//   }
-
-//   showForm = () => {
-//     this.setState({ showForm: true })
-//   }
-
-//   // Fix array so that props change, so sort reloads page
-//   sort = () => {
-//     this.setState(prevState => ({
-//       contacts: [...prevState.contacts].sort(compareNames)
-//     }))
-//   }
-
-//   render() {
-//     // console.error('full page alert')
-//     // console.warn('this is a less harsh warning')
-//     if (this.state.showForm) return <AddContactForm onSubmit={this.addContact} />
-//     return (
-//       <View style={styles.container}>
-
-//         <Button title="Toggle Contacts" onPress={this.toggleContacts} />
-
-//         <Button title="Add Contact" onPress={this.showForm} />
-
-//         {this.state.showContacts && <ContactsList contacts={this.state.contacts} />}
-//       </View>
-//     )
-
-
-//   }
-// }
