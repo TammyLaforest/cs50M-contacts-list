@@ -23,13 +23,8 @@ import Row from './Row'
 import ContactsList from './ContactsList'
 import AddContactForm from './AddContactForm'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: Constants.statusBarHeight,
-  },
-});
+import { fetchUsers } from './api'
+
 
 
 const MainStack = createStackNavigator(
@@ -85,12 +80,11 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchUsers()
+    this.getUsers()
   }
-  fetchUsers = async () => {
-    const response = await fetch('https://randomuser.me/api?results=50&nat=us')
-    const { results } = await response.json()
-    console.log(results)
+
+  getUsers = async () => {
+    const results = await fetchUsers()
     this.setState({ contacts: results })
   }
 
@@ -114,3 +108,11 @@ export default class App extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: Constants.statusBarHeight,
+  },
+});
