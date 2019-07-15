@@ -1,16 +1,13 @@
 import React from 'react';
-import { Button, Platform, SectionList, StatusBar, StyleSheet, Text, View } from 'react-native';
-import Constants from 'expo-constants'
-
 // Added createAppContainer for new version of React-Navigation
 import {
   createAppContainer,
   createStackNavigator,
   createSwitchNavigator,
   createBottomTabNavigator
-} from "react-navigation";
+} from "react-navigation"
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from "react-native-vector-icons/Ionicons"
 
 import AddContactScreen from "./screens/AddContactScreen";
 import SettingsScreen from "./screens/SettingsScreen";
@@ -18,12 +15,16 @@ import ContactListScreen from "./screens/ContactListScreen";
 import ContactDetailsScreen from "./screens/ContactDetailsScreen";
 import LoginScreen from "./screens/LoginScreen";
 
+import { fetchUsers } from './api'
+import contacts from './contacts'
+
+// import { Button, Platform, SectionList, StatusBar, StyleSheet, Text, View } from 'react-native';
+// import Constants from 'expo-constants'
+
 // import contacts, { compareNames } from './contacts'
 // import Row from './Row'
 // import ContactsList from './ContactsList'
 // import AddContactForm from './AddContactForm'
-
-import { fetchUsers } from './api'
 
 const MainStack = createStackNavigator(
   {
@@ -74,17 +75,17 @@ const AppContainer = createAppContainer(AppNavigator)
 
 export default class App extends React.Component {
   state = {
-    contacts: null,
+    contacts
   }
 
-  componentDidMount() {
-    this.getUsers()
-  }
+  // componentDidMount() {
+  //   this.getUsers()
+  // }
 
-  getUsers = async () => {
-    const results = await fetchUsers()
-    this.setState({ contacts: results })
-  }
+  // getUsers = async () => {
+  //   const results = await fetchUsers()
+  //   this.setState({ contacts: results })
+  // }
 
   addContact = newContact => {
     this.setState(prevState => ({
@@ -95,22 +96,7 @@ export default class App extends React.Component {
   // Pass AppNavigator props to AppContainer instead
   render() {
     return (
-
-      <AppContainer
-        screenProps={{
-          contacts: this.state.contacts,
-          addContact: this.addContact
-        }}
-      />
-
+      <AppContainer />
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: Constants.statusBarHeight,
-  },
-});
