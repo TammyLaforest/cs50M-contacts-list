@@ -6,6 +6,7 @@ import {
   createSwitchNavigator,
   createBottomTabNavigator
 } from "react-navigation"
+import { Provider } from "react-redux"
 
 import Ionicons from "react-native-vector-icons/Ionicons"
 
@@ -17,6 +18,7 @@ import LoginScreen from "./screens/LoginScreen";
 
 import { fetchUsers } from './api'
 import contacts from './contacts'
+import store from "./redux/store"
 
 // import { Button, Platform, SectionList, StatusBar, StyleSheet, Text, View } from 'react-native';
 // import Constants from 'expo-constants'
@@ -96,7 +98,9 @@ export default class App extends React.Component {
   // Pass AppNavigator props to AppContainer instead
   render() {
     return (
-      <AppContainer />
+      <Provider store={store}>
+        <AppContainer />
+      </Provider >
     )
   }
 }
