@@ -7,7 +7,6 @@ const processContact = contact => ({
 export const fetchUsers = async () => {
     const response = await fetch('https://randomuser.me/api?results=50&nat=us')
     const { results } = await response.json()
-    // console.log(results)
     return results.map(contact => processContact(contact))
 }
 
@@ -19,7 +18,7 @@ export const login = async (username, password) => {
     })
 
     if (response.ok) {
-        return true
+        return { token } = await response.json()
     }
 
     const errMessage = await response.text()

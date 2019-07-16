@@ -18,7 +18,9 @@ import LoginScreen from "./screens/LoginScreen";
 
 import { fetchUsers } from './api'
 import contacts from './contacts'
-import store from "./redux/store"
+import { store, persistor } from "./redux/store"
+
+import { PersistGate } from 'redux-persist/integration/react';
 
 // import { Button, Platform, SectionList, StatusBar, StyleSheet, Text, View } from 'react-native';
 // import Constants from 'expo-constants'
@@ -99,7 +101,10 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        <PersistGate loading={null} persistor={persistor} >
+
+          <AppContainer />
+        </PersistGate>
       </Provider >
     )
   }

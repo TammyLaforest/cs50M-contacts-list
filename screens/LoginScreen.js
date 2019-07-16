@@ -1,29 +1,35 @@
 import React from "react";
 import { Button, View, StyleSheet, TextInput, Text } from "react-native";
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import { login } from '../api'
+import { logInUser } from '../redux/actions'
 
-export default class LoginScreen extends React.Component {
+class LoginScreen extends React.Component {
+    static propTypes = {
+        err: PropTypes.string,
+        token: PropTypes.string,
+        logInUser: PropTypes.func
+    }
     state = {
         username: "",
-        password: "",
-        err: ""
+        password: ""
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.token) {
+            this.props.navigation.navigate('Main')
+        }
     }
 
     _login = async () => {
-        // this.props.navigation.navigate('Main')
-        try {
-            const success = await login(this.state.username, this.state.password)
-            this.props.navigation.navigate('Main')
-        } catch (err) {
-            const errMessage = err.message
-            this.setState({ err: errMessage })
-        }
+        this.props.logInUser(this.state.username, this.state.password)
     }
 
     handleUsernameUpdate = username => {
         this.setState({ username })
     }
+
     handlePasswordUpdate = password => {
         this.setState({ password })
     }
@@ -31,7 +37,7 @@ export default class LoginScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.error}>{this.state.err}</Text>
+                <Text style={styles.error}>{this.props.err}</Text>
                 <View style={styles.textBox}>
                     <TextInput
                         placeholder='username'
@@ -43,11 +49,8 @@ export default class LoginScreen extends React.Component {
                         onChangeText={this.handlePasswordUpdate}
                         autoCapitalize="none"
                         secureTextEntry={true} />
-
                 </View>
                 <Button title="Press to Log In" onPress={this._login} />
-
-
             </View>
         );
     }
@@ -69,3 +72,9 @@ const styles = StyleSheet.create({
         textAlign: "center"
     }
 });
+
+const mapStateToProps = state => ({
+    err: state.user.loginErr,
+    token: state.user.token
+})
+export default connect(mapStateToProps, { logInUser })(LoginScreen)

@@ -1,28 +1,22 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import { addContact } from './actions'
 import reducer from './reducer'
 
-// Way to wrap an expression to delay its evaluation
-// const thunk = store = next => action => {
-//     if (typeof action === 'function') {
-//         action(store.dispatch)
-//     } else {
-//         next(action)
-//     }
-// }
 
-const store = createStore(reducer, applyMiddleware(thunk))
+const persistConfig = {
+    key: 'root',
+    storage,
+}
 
+const persistedReducer = persistReducer(persistConfig, reducer)
+const store = createStore(persistedReducer, applyMiddleware(thunk))
+const persistor = persistStore(store)
 
 
-// store.dispatch(updateUser({ foo: 'foo' }))
-// store.dispatch(updateUser({ bar: 'bar' }))
-// store.dispatch(updateUser({ foo: 'baz' }))
+// store.dispatch(addContact({ name: 'Tammy', phone: '1231231234' }))
+// store.dispatch(addContact({ name: 'Jenny', phone: '2344566789' }))
 
-store.dispatch(addContact({ name: 'Tammy', phone: '1231231234' }))
-
-
-console.log(store.getState())
-export default store
+export { store, persistor }
